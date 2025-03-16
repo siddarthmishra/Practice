@@ -34,16 +34,26 @@ public class StreamsDemo3 {
 		};
 		// filter out duplicate, then sort by first name and then by last name
 		System.out.println("==========================");
+		System.out.println("result2");
 		Collection<Employee> result2 = employees.stream().sorted(c).collect(Collectors.collectingAndThen(
 				Collectors.toMap(Employee::getId, Function.identity(), (oldVal, newVal) -> newVal, LinkedHashMap::new),
 				map -> map.values()));
 		result2.forEach(System.out::println);
 		System.out.println("==========================");
+		System.out.println("result3");
 		List<Employee> result3 = employees.stream()
 				.collect(Collectors.collectingAndThen(
 						Collectors.toMap(Employee::getId, Function.identity(), (oldVal, newVal) -> newVal),
 						employeeMap -> employeeMap.values().stream().sorted(c).toList()));
 		result3.forEach(System.out::println);
+		System.out.println("==========================");
+		System.out.println("result4");
+		List<Employee> result4 = employees.stream().collect(Collectors.collectingAndThen(
+				Collectors.toMap(Employee::getId, Function.identity(), (oldVal, newVal) -> newVal),
+				employeeMap -> employeeMap.values().stream()
+						.sorted(Comparator.comparing(Employee::getFirstName).thenComparing(Employee::getLastName))
+						.toList()));
+		result4.forEach(System.out::println);
 		System.out.println("==========================");
 	}
 
