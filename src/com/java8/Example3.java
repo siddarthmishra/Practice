@@ -25,6 +25,12 @@ public class Example3 {
 		List<Integer> ints = IntStream.iterate(3, i -> i * 2).mapToObj(Integer::valueOf).limit(10)
 				.collect(Collectors.toList());
 		System.out.println(ints);
+		List<Integer> fibonacci = Stream.iterate(new int[] { 0, 1 }, arr -> new int[] { arr[1], arr[0] + arr[1] })
+				.limit(10).map(arr -> {
+					// System.out.println(Arrays.toString(arr));
+					return arr[0];
+				}).collect(Collectors.toList());
+		System.out.println(fibonacci); // Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 		List<Integer> randomNumbers = Stream.generate(() -> new Random().nextInt(1)).limit(10).collect(Collectors.toList());
 		System.out.println(randomNumbers);
 		System.out.println();
